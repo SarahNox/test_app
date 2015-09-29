@@ -1,9 +1,15 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+
   def setup
     @user = users(:michael)
     @other_user = users(:archer)
+  end
+
+  test "should redirect index when not logged in" do
+    get :index
+    assert_redirected_to login_url
   end
 
   test "should get new" do
@@ -37,11 +43,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
-  test "should redirect index when not logged in" do
-    get :index
-    assert_redirected_to login_url
-  end
-
   test "should redirect destroy when not logged in" do
     assert_no_difference 'User.count' do
       delete :destroy, id: @user
@@ -56,5 +57,10 @@ class UsersControllerTest < ActionController::TestCase
     end
     assert_redirected_to root_url
   end
-  
+
+  # test "should redirect following when not logged in" do
+  #   get :following, id: @user
+  #   assert_redirected_to login_url
+  # end
+
 end
